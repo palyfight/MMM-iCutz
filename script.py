@@ -12,7 +12,7 @@ def cleanup_old_images(max_images=10):
             os.remove(f)
 
 camera = PiCamera()
-camera.resolution = (640, 480)
+camera.resolution = '1080p' #https://picamera.readthedocs.io/en/release-1.13/api_camera.html#picamera.PiCamera.resolution
 
 try:
     camera.start_preview()

@@ -1,31 +1,60 @@
-const NodeHelper = require('node_helper');
-const { spawn } = require('child_process');
+var NodeHelper = require("node_helper");
+const { spawn } = require("child_process");
 
 module.exports = NodeHelper.create({
     start: function() {
-        console.log('MMM-iCutz helper started...');
-        this.pythonStarted = false;
+        console.log("MMM-iCutz helper started...");
     },
 
+    // Handle start and stop messages from the module
     socketNotificationReceived: function(notification, payload) {
-        if (notification === "START_CAMERA" && !this.pythonStarted) {
-            this.pythonStarted = true;
-            this.startCameraScript();
+        if (notification === "START_STREAM") {
+            this.startStream(payload);
+        } else if (notification === "STOP_STREAM") {
+            this.stopStream();
         }
     },
 
-    startCameraScript: function() {
-        const scriptPath = 'script.py';
-        this.pyShell = spawn('python3', [scriptPath]);
-        this.pyShell.stdout.on('data', (data) => {
-            console.log("Python script output:", data.toString());
+    startStream: function(config) {
+        if (this.streamProcess) {
+            console.log("Stream already started.");
+            return;
+        }
+
+        console.log("Starting camera stream...");
+        // Build the ffmpeg command from the config or use defaults
+        var streamUrl = config.streamUrl || "http://localhost:8082/feed.ffm";
+        var videoDevice = config.videoDevice || "/dev/video0";
+
+        this.streamProcess = spawn("ffmpeg", [
+            "-f", "video4linux2",
+            "-i", videoDevice,
+            "-f", "mjpeg",
+            "-q:v", "5",
+            streamUrl
+        ]);
+
+        this.streamProcess.stdout.on("data", (data) => {
+            console.log(`Stream: ${data}`);
         });
-        this.pyShell.stderr.on('data', (data) => {
-            console.error("Python script error:", data.toString());
+
+        this.streamProcess.stderr.on("data", (data) => {
+            console.error(`Stream Error: ${data}`);
         });
-        this.pyShell.on('close', (code) => {
-            console.log(`Python script stopped with code ${code}`);
-            this.pythonStarted = false;
+
+        this.streamProcess.on("close", (code) => {
+            console.log(`Stream process exited with code ${code}`);
+            this.streamProcess = null;
         });
+    },
+
+    stopStream: function() {
+        if (this.streamProcess) {
+            this.streamProcess.kill('SIGINT');
+            this.streamProcess = null;
+            console.log("Camera stream stopped.");
+        } else {
+            console.log("No stream to stop.");
+        }
     }
 });

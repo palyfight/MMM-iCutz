@@ -4,7 +4,13 @@ This module displays a camera feed, from a PiCamera, on the Magic Mirror.
 
 ## Dependencies
 
-python3
+- python3 (should come by default with Raspian OS)
+- ffmpeg
+
+```
+sudo apt-get update
+sudo apt-get install ffmpeg
+```
 
 ## How to use
 

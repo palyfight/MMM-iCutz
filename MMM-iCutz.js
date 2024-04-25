@@ -12,7 +12,7 @@ Module.register("MMM-iCutz", {
         image.style.width = "100%";
         var date = new Date();
         // Format the image URL to match your script's output
-        var imagePath = `public/${this.fileDate()}.jpg`;
+        var imagePath = `/home/ntwali/MagicMirror/modules/MMM-iCutz/public/${this.fileDate()}.jpg`;
         image.src = imagePath;
         wrapper.appendChild(image);
         return wrapper;

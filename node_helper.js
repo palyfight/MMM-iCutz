@@ -15,7 +15,7 @@ module.exports = NodeHelper.create({
     },
 
     startCameraScript: function() {
-        const scriptPath = 'MMM-iCutz/script.py';
+        const scriptPath = 'modules/MMM-iCutz/script.py';
         this.pyShell = spawn('python3', [scriptPath]);
         this.pyShell.stdout.on('data', (data) => {
             console.log("Python script output:", data.toString());

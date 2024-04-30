@@ -3,7 +3,7 @@ import glob
 from picamera import PiCamera
 from time import sleep
 import datetime
-import cv2
+# import cv2
 
 def cleanup_old_images(max_images=10):
     """Keep only the latest max_images files."""
@@ -24,7 +24,7 @@ try:
         timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
         image_path = f'modules/MMM-iCutz/public/{timestamp}.jpg'
         camera.capture(image_path)
-        
+
         # camera.capture("temporary.jpg")  # Capture image
 
         # # Read the image and convert to grayscale for face detection

@@ -7,17 +7,19 @@ Module.register("MMM-iCutz", {
     },
 
     getStyles: function() {
-        return ["MMM-iCutz.css"]; // Include the CSS file here
+        return ["MMM-iCutz.css"];
     },
 
-    getDom: function() {
-        var nunjucks = require('nunjucks');
-        nunjucks.configure({ autoescape: true });
-        var renderedHtml = nunjucks.render('MMM-iCutz.njk', { fileDate: this.fileDate() });
+    // Specify the template file to be used
+    getTemplate: function() {
+        return "MMM-iCutz.njk";
+    },
 
-        var wrapper = document.createElement('div');
-        wrapper.innerHTML = renderedHtml;
-        return wrapper.firstChild;
+    // Provide data to the template
+    getTemplateData: function() {
+        return {
+            fileDate: this.fileDate()
+        };
     },
 
     // getDom: function() {

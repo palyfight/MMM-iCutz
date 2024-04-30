@@ -4,7 +4,18 @@ This module displays a camera feed, from a PiCamera, on the Magic Mirror.
 
 ## Dependencies
 
-python3
+- python3 (should come with RaspianOS)
+- picamera
+
+```
+idk
+```
+
+- cv2
+
+```
+pip install opencv-python-headless
+```
 
 ## How to use
 

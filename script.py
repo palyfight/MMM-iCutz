@@ -16,7 +16,7 @@ camera = PiCamera()
 camera.resolution = (1920, 1080)  # Set resolution tuple
 
 # Load OpenCV's pre-trained Haar cascade for face detection
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+# face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 try:
     camera.start_preview()

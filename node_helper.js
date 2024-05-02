@@ -17,8 +17,10 @@ module.exports = NodeHelper.create({
     startCameraScript: function() {
         const scriptPath = 'modules/MMM-iCutz/script.py';
         this.pyShell = spawn('python3', [scriptPath]);
+
         this.pyShell.stdout.on('data', (data) => {
             console.log("Python script output:", data.toString());
+            this.sendSocketNotification("IMAGE_CAPTURED", data.toString());
         });
         this.pyShell.stderr.on('data', (data) => {
             console.error("Python script error:", data.toString());

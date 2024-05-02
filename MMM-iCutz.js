@@ -6,6 +6,13 @@ Module.register("MMM-iCutz", {
         console.log("Requested to start camera...");
     },
 
+    notificationReceived: function (notification, payload, sender) {
+        if (notification === "IMAGE_CAPTURED") {
+            console.log(payload);
+            this.sendNotification("NEW_IMAGE_AVAILABLE", payload);
+        }
+    },
+
     getStyles: function() {
         return ["MMM-iCutz.css"];
     },

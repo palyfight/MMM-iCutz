@@ -2,8 +2,8 @@ Module.register("MMM-iCutz", {
     defaults: {},
 
     start: function() {
-        this.sendSocketNotification("START_CAMERA", {});
         console.log("Requested to start camera...");
+        this.sendSocketNotification("START_CAMERA", {});
     },
 
     notificationReceived: function (notification, payload, sender) {
